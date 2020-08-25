@@ -1,0 +1,10 @@
+FROM golang:alpine as builder
+# Used for building/tests
+ENV CGO_ENABLED=0 \
+    GOOS=linux \
+    GOARCH=amd64
+
+WORKDIR /build
+COPY go.mod .
+COPY go.sum .
+COPY . .

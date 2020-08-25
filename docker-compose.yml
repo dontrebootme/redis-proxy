@@ -1,0 +1,19 @@
+version: '3'
+services:
+  unit-tests:
+    build:
+      context: .
+      dockerfile: Dockerfile.build
+    command: ["go", "test", "-v", "-short"]
+  end-to-end:
+      build: 
+        context: .
+        dockerfile: Dockerfile.build
+      command: ["go", "test",  "-v"]
+  proxy:
+    build: .
+    ports:
+      - 8080:8080
+    command: ["-redis-addr", "redis:6379", "-cache-time", "5", "-cache-size", "1000", "-port", "8080"]
+  redis:
+    image: "redis:alpine"
